@@ -47,3 +47,11 @@ node_modules/
 
 settings.py
 ```
+
+```py
+# check for permission
+ls -l /Users/username/.vscode/extensions/ms-python.python-2024.3.10742127/python_files/deactivate/zsh/
+# give permission
+chmod +x /Users/username/.vscode/extensions/ms-python.python-2024.3.10742127/python_files/deactivate/zsh/deactivate
+
+```

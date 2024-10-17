@@ -263,7 +263,7 @@ return redirect("home_view")
 window.location.href = `/account/send_otp/${email}`;
 ```
 
-using `/account`, it will make our path absolute and when we click, it will take us to `https://your-domain.com/account/send_otp/${email}`, but if we omit `account/send_otp`, it will take us to a relative path adding the current `ulr` before our path, hence it is crucial ot use `/` before account to make absolute.
+using `/account`, it will make our path absolute and when we click, it will take us to `https://your-domain.com/account/send_otp/${email}`, but if we omit `/account`, it will take us to a relative path adding the current `ulr` before our path, hence it is crucial ot use `/` before account to make absolute.
 
 ```py
 #login.html
@@ -279,7 +279,7 @@ function sendOTP(){
 </script>
 ```
 
-extremely crucial to use `window.location.href=/account/send_otp/${email}` and in urls also `path("send_otp/<email>/",send_otp, name="send_otp_view")`, the path should match, otherwise, the send_top. view will never gets executed and otp will not be sent.
+extremely crucial to use `window.location.href=/account/send_otp/${email}` and in urls also `path("send_otp/<email>/",send_otp, name="send_otp_view")`, the path should match, otherwise, the `send_top.view` will never gets rendered and otp will not be sent.
 
 Here also, it is important to check if the user already in our database.
 

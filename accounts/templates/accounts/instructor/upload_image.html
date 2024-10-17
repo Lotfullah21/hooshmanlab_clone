@@ -1,0 +1,13 @@
+{% extends "../utils/base.html"%} {%block content%}
+
+<div>{%include "../utils/navbar.html"%}</div>
+
+<form method="POST">
+	{%csrf_token%}
+
+	<label for="">
+		<input type="file" />
+	</label>
+</form>
+
+{%endblock%}

@@ -1,7 +1,6 @@
-
 from pathlib import Path
-import os
 from dotenv import load_dotenv
+import os
 load_dotenv()  # Load environment variables from .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -113,16 +112,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-# Media files settings
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# URL prefix for serving static files
+STATIC_URL = "/static/"
+# directory to collect static files for deployment
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# serve static files locally from here.
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'public/static')
+]
+# access url for media files
+MEDIA_URL = "/media/"
+# save the media inside the root dir of project inside media folder
+MEDIA_ROOT = os.path.join(BASE_DIR, "public/media")
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
 # Sending emails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

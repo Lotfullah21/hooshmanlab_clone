@@ -26,6 +26,14 @@
 				class="btn btn-primary text-white bg-blue-500 hover:bg-blue-700 p-1 rounded">
 				<a href="{% url 'instructor_register_view' %}">register instructor</a>
 			</button>
+			<button
+				class="btn btn-primary text-white bg-blue-500 hover:bg-blue-700 p-1 rounded">
+				<a href="{% url 'instructor_login_view' %}">login instructor</a>
+			</button>
+			<button
+				class="btn btn-primary text-white bg-blue-500 hover:bg-blue-700 p-1 rounded">
+				<a href="{% url 'instructor_dashboard_view' %}">dashboard</a>
+			</button>
 		</div>
 
 		{%block content%} {% endblock %}
