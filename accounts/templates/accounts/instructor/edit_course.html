@@ -3,7 +3,7 @@
 	<div class="sm:mx-auto sm:w-full sm:max-w-sm">
 		<h2
 			class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-			Add a course
+			Edit course
 		</h2>
 	</div>
 
@@ -20,6 +20,7 @@
 					<input
 						id="course_title"
 						name="course_title"
+						value="{{course.course_title}}"
 						type="text"
 						autocomplete="course_title"
 						placeholder="course title"
@@ -28,7 +29,7 @@
 				</div>
 			</div>
 
-			<div>
+			 <div>
 				<label
 					for="course_description"
 					class="block text-sm font-medium leading-6 text-gray-900"
@@ -36,27 +37,32 @@
 				>
 				<div>
 					<textarea
-						id="course_description"
-						name="course_description"
+						id="froala"
 						type="text"
+						name="course_description"
+						value="{{course.course_description}}"
 						autocomplete="course_description"
 						placeholder="course description"
 						required
-						class="block w-full rounded-md pl-1 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+						class="block w-full rounded-md pl-1 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+						>{{course.course_description}}</textarea>
 				</div>
-			</div>
+			</div> 
 
+
+		
 			<div>
 				<label
 					for="course_level"
 					class="block text-sm font-medium text-gray-700"></label>
 				<select
 					name="course_level"
+					value="{{course.course_level}}"
 					id="course_level"
 					class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-					<option value="beginner">Beginner</option>
-					<option value="intermediate">Intermediate</option>
-					<option value="advanced">Advanced</option>
+					{%for value, display in LEVEL_CHOICES%}
+					<option value="{{value}}" {% if course.course_level == value %}selected{%endif%}>{{display}}</option>
+					{%endfor%}
 				</select>
 			</div>
 
@@ -72,6 +78,7 @@
 					<input
 						id="course_starting_date"
 						name="course_starting_date"
+						value="{{course_starting_date}}"
 						type="date"
 						placeholder="course starting date"
 						required
@@ -91,6 +98,7 @@
 					<input
 						id="course_ending_date"
 						name="course_ending_date"
+						value="{{course_ending_date}}"
 						type="date"
 						placeholder="course ending date"
 						required
@@ -110,6 +118,7 @@
 					<input
 						id="course_price"
 						name="course_price"
+						value="{{course.course_price}}"
 						type="number"
 						placeholder="course price"
 						required
@@ -121,13 +130,16 @@
 				<button
 					type="submit"
 					class="flex w-full mt-4 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-					Add
+					Edit
 				</button>
 			</div>
 		</form>
 	</div>
 </div>
 
-<!-- Notification -->
-<div class="notification-container" id="notification"></div>
+
+<script>
+	var editor = new FroalaEditor('#froala');		
+      </script>	
+
 {% endblock %}

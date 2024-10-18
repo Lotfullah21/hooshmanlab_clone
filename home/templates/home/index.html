@@ -1,50 +1,35 @@
 {% extends "home/utils/base.html" %} {% block content %}
-<div
-	class="max-w-lg grid mx-auto md:max-w-5xl md:grid-cols-3 lg:max-w-6xl lg:grid-cols-4 gap-6 p-4">
-	<div class="max-w-sm rounded overflow-hidden shadow-lg p-4 bg-white">
-		<div class="card-content">
-			<img class="w-full" src="" alt="Card image" />
-			<div class="px-6 py-4">
-				<h1 class="font-bold text-xl mb-2">Name</h1>
-				<h3 class="text-gray-700 text-base">Intro</h3>
+<div class="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-8 py-12">
+	<div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+		{% for item in courses %}
+		<div
+			class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+			{% with first_image=item.images.first %} {% if first_image %}
+			<img
+				class="w-full h-48 object-cover"
+				src="{{ first_image.image.url }}"
+				alt="{{ course.course_title }}" />
+			{% else %}
+			<img class="w-full h-48 object-cover" src="" alt="Default Image" />
+			{% endif %} {% endwith %}
+			<div class="p-6">
+				<h2 class="font-bold text-xl text-gray-900 mb-2">
+					{{ item.course_title }}
+				</h2>
+				<p class="text-gray-700 text-base mb-4">
+					{{ item.course_description }}
+				</p>
+				<div class="text-sm text-gray-500 space-y-1">
+					<p>Duration: {{ item.course_duration }}</p>
+					<p>Level: {{ item.course_level }}</p>
+					<p>
+						Instructor: {{ item.course_instructor.first_name }}
+						{{item.course_instructor.last_name }}
+					</p>
+				</div>
 			</div>
 		</div>
-		<div class="grid grid-cols-2 items-center justify-center footer px-6 py-4">
-			<h4 class="text-gray-600">Duration</h4>
-			<a href="#" class="text-red-600 hover:text-red-800">
-				<i class="fa-brands fa-youtube"></i>
-			</a>
-		</div>
-	</div>
-	<div class="max-w-sm rounded overflow-hidden shadow-lg p-4 bg-white">
-		<div class="card-content">
-			<img class="w-full" src="" alt="Card image" />
-			<div class="px-6 py-4">
-				<h1 class="font-bold text-xl mb-2">Name</h1>
-				<h3 class="text-gray-700 text-base">Intro</h3>
-			</div>
-		</div>
-		<div class="grid grid-cols-2 items-center justify-center footer px-6 py-4">
-			<h4 class="text-gray-600">Duration</h4>
-			<a href="#" class="text-red-600 hover:text-red-800">
-				<i class="fa-brands fa-youtube"></i>
-			</a>
-		</div>
-	</div>
-	<div class="max-w-sm rounded overflow-hidden shadow-lg p-4 bg-white">
-		<div class="card-content">
-			<img class="w-full" src="" alt="Card image" />
-			<div class="px-6 py-4">
-				<h1 class="font-bold text-xl mb-2">Name</h1>
-				<h3 class="text-gray-700 text-base">Intro</h3>
-			</div>
-		</div>
-		<div class="grid grid-cols-2 items-center justify-center footer px-6 py-4">
-			<h4 class="text-gray-600">Duration</h4>
-			<a href="#" class="text-red-600 hover:text-red-800">
-				<i class="fa-brands fa-youtube"></i>
-			</a>
-		</div>
+		{% endfor %}
 	</div>
 </div>
 {% endblock %}

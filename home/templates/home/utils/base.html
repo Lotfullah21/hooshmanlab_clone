@@ -12,31 +12,7 @@
 		<script src="https://cdn.tailwindcss.com"></script>
 	</head>
 	<body>
-		{% include "./navbar.html"%}
-		<div class="flex justify-center gap-2 mt-1 mr-1">
-			<button
-				class="btn btn-primary text-white bg-blue-500 hover:bg-blue-700 p-1 rounded">
-				<a href="{% url 'login_view' %}">login</a>
-			</button>
-			<button
-				class="btn btn-primary text-white bg-blue-500 hover:bg-blue-700 p-1 rounded">
-				<a href="{% url 'register_view' %}">register</a>
-			</button>
-			<button
-				class="btn btn-primary text-white bg-blue-500 hover:bg-blue-700 p-1 rounded">
-				<a href="{% url 'instructor_register_view' %}">register instructor</a>
-			</button>
-			<button
-				class="btn btn-primary text-white bg-blue-500 hover:bg-blue-700 p-1 rounded">
-				<a href="{% url 'instructor_login_view' %}">login instructor</a>
-			</button>
-			<button
-				class="btn btn-primary text-white bg-blue-500 hover:bg-blue-700 p-1 rounded">
-				<a href="{% url 'instructor_dashboard_view' %}">dashboard</a>
-			</button>
-		</div>
-
-		{%block content%} {% endblock %}
+		{% include "./navbar.html"%} {%block content%} {% endblock %}
 		<div class="bg-gray-950 p-5 mt-9">
 			<p class="text-center text-gray-100">
 				All rights reserved. 2024 hooshmandlab

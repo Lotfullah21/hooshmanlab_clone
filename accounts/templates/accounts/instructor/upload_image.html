@@ -2,12 +2,34 @@
 
 <div>{%include "../utils/navbar.html"%}</div>
 
-<form method="POST">
-	{%csrf_token%}
+<div class="grid item-center justify-center">
+	<div class="w-full sm:max-w-sm p-8 flex justify-center items-center">
+		<form method="POST" enctype="multipart/form-data">
+			{%csrf_token%}
+			<!-- <label for="file_upload">upload file</label> -->
+			<input type="file" name="file_upload" id="file_upload" />
+			<button type="submit" class="mt-4 p-1 bg-green-400 rounded text-md">
+				submit
+			</button>
+		</form>
+	</div>
+	<div class="grid grid-cols-3 items-center justify-center gap-2">
+		{% for item in images%}
+		<div>
+			<img
+				src="{{item.image.url}}"
+				alt="course image"
+				class="h-48 w-full object-cover" />
+			<button class="mt-4 text-center">
+				<a
+					class="btn bg-red-500 rounded p-1"
+					href="{%url 'delete_image_view' item.id %}"
+					>delete</a
+				>
+			</button>
+		</div>
 
-	<label for="">
-		<input type="file" />
-	</label>
-</form>
-
+		{%endfor%}
+	</div>
+</div>
 {%endblock%}

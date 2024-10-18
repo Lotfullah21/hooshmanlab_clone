@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from django.contrib import messages
-from .models import Student, Instructor, Course
+from .models import Student, Instructor, Course, CourseImageField
 from .utils import generate_token, send_token_email, send_otp_email, send_instructor_token_email, generate_slug
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
@@ -195,7 +195,6 @@ def login_instructor_page(request):
             instructor = Instructor.objects.filter(is_verified=True, email=email).first()
             if instructor:
                 login(request, user)
-                messages.success(request, "Logged in successfully!")
                 return redirect("home_view")
             else:
                 messages.error(request, "User is not verified, please verify your account first")
@@ -210,7 +209,8 @@ def login_instructor_page(request):
 @login_required
 def instructor_dashboard_page(request):
     courses = Course.objects.filter(course_instructor=request.user.instructor)
-    print(courses)
+    for course in courses:
+        course.first_image = course.images.first()
     context = {"courses":courses}
     return render(request, "accounts/instructor/instructor_dashboard.html", context)
 
@@ -270,16 +270,110 @@ def add_course(request):
         return redirect("instructor_login_view")
     
 
-def upload_image_page(request):
-    return render(request, "accounts/instructor/upload_image.html")
 
 
-def edit_image(request, id):
-    return render(request, "accounts/instructor/upload_image.html")
+def logout_view(request):
+    if request.user.is_authenticated:
+        if  hasattr(request.user, "instructor"):
+            logout(request)
+            messages.success(request, "instructor logout successfully!!!")
+            return redirect("instructor_logout_view")
+        elif hasattr(request.user, "student"):
+            logout(request)
+            messages.success(request, "student logout successfully!!!")
+            return redirect("logout_view")
+    return redirect("home_view") 
+        
+        
+def instructor_logout_view(request):
+    logout(request)
+    return redirect("instructor_login_view")
 
+def upload_image_page(request, course_slug):
+    course = Course.objects.get(course_slug=course_slug)
+    if request.method=="POST":
+        file = request.FILES.get("file_upload")
+        if file:
+            CourseImageField.objects.create(
+                course=course,
+                image=file
+            )    
+            messages.success(request, "Image uploaded successfully")
+            return redirect("instructor_dashboard_view")
+        else:
+            messages.error(request, "No file is uploaded")  
+    images = course.images.all()
+    return render(request, "accounts/instructor/upload_image.html",context={"images":images})
+
+
+def edit_image_page(request, course_slug):
+    course = Course.objects.get(course_slug=course_slug)
+    if request.method == "POST":
+        course_title = request.POST.get("course_title")
+        course_description = request.POST.get("course_description")
+        course_level = request.POST.get("course_level")
+        course_starting_date = request.POST.get("course_starting_date")
+        course_ending_date = request.POST.get("course_ending_date")
+        course_price = request.POST.get("course_price")
+        
+            # check if all fields are provided
+        if not (course_title and course_description and course_level and course_starting_date and course_ending_date and course_price):
+                messages.error(request, "All fields are required.")
+                return redirect("add_course_view")
+        try:
+                # retrieve the instructor associated with the logged-in user
+            instructor = Instructor.objects.get(user=request.user) 
+                # parse the starting and ending dates
+            start_date = datetime.strptime(course_starting_date, '%Y-%m-%d')
+            end_date = datetime.strptime(course_ending_date, '%Y-%m-%d')             
+                # check if the end date is after the start date
+            if end_date <= start_date:
+                messages.error(request, "End date must be after starting date.")
+                return redirect("add_course_view")
+
+                # calculate the course duration in weeks
+            course_duration_in_weeks = (end_date - start_date).days // 7
+            
+            if (end_date-start_date).days <7:
+                course_duration_in_weeks = f"{(end_date - start_date).days} days"
+                
+            if (end_date-start_date).days >7:
+                course_duration_in_weeks = f"{(end_date - start_date).days} weeks"
+                
+                # check if the end date is after the start date
+            if end_date <= start_date:
+                messages.error(request, "End date must be after starting date.")
+                return redirect("add_course_view")
+            
+            else:
+                course.course_title = course_title
+                course.course_duration = course_duration_in_weeks
+                course.course_level = course_level
+                course.course_starting_date = course_starting_date
+                course.course_ending_date= course_ending_date
+                course.course_price = course_price
+                course.course_slug = generate_slug(course_title)
+                course.save()
+                messages.success(request,"Course updated!!!")
+                return redirect("instructor_dashboard_view")
+        except Instructor.DoesNotExist:
+            messages.error(request, "You are not authorized")
+            
+    # Convert datetime fields to 'YYYY-MM-DD' for the form input
+    course_starting_date = course.course_starting_date.strftime('%Y-%m-%d') if course.course_starting_date else ""
+    course_ending_date = course.course_ending_date.strftime('%Y-%m-%d') if course.course_ending_date else ""
+
+    context = {
+        "course": course,
+        "LEVEL_CHOICES": Course.LEVEL_CHOICES,
+        "course_starting_date": course_starting_date,
+        "course_ending_date": course_ending_date
+    }       
+    return render(request, "accounts/instructor/edit_course.html", context=context)    
 
 def delete_image(request, id):
-    return render(request, "accounts/instructor/upload_image.html")
-
-
+    courseImage= CourseImageField.objects.get(id=id)
+    courseImage.delete()
+    messages.success(request, "Image deleted successfully!!!")
+    return redirect("instructor_dashboard_view")
 

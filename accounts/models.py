@@ -22,8 +22,6 @@ class Student(models.Model):
     def __str__(self) -> str:
         return self.full_name +"is verified = " + str(self.is_verified)
 
-
-
 class Instructor(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     first_name = models.CharField(max_length=120, default="king")  
@@ -39,8 +37,6 @@ class Instructor(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
         
-        
-
     def __str__(self) -> str:
         return self.first_name +"is verified = " + str(self.is_verified)
 
