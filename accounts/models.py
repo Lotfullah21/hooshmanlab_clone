@@ -62,7 +62,6 @@ class Course(models.Model):
     is_active = models.BooleanField(default=True)
     course_slug = models.SlugField(max_length=1000, unique=True)
     
-    
     def __str__(self) -> str:
         return f"{self.course_title} - {self.course_description}"
         
@@ -82,3 +81,8 @@ class CourseManager(models.Model):
     manager_contact = models.CharField(max_length=140)
     def __str__(self) -> str:
         return f"{self.manager_name} - {self.course.course_title}"
+    
+class CourseEnrollment(models.Model):
+    course = models.ForeignKey("Course", on_delete = models.CASCADE, related_name = "enrollments")
+    course_user = models.ForeignKey("Student", on_delete = models.CASCADE, related_name="enrolled_students")
+    enrollment_starting_date = models.DateTimeField(auto_now_add=True)

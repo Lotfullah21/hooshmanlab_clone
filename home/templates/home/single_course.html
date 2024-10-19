@@ -1,0 +1,81 @@
+{% extends "home/utils/base.html" %} {% block content %}
+<div
+	class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-white shadow-md rounded-lg">
+	<!-- Course Image and Details -->
+	<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+		<!-- Course Image -->
+		<div class="rounded-lg overflow-hidden shadow-lg">
+			{% with first_image=course.images.first %} {% if first_image %}
+			<img
+				class="w-full h-full object-cover"
+				src="{{ first_image.image.url }}"
+				alt="{{ course.course_title }}" />
+			{% else %}
+			<img
+				class="w-full h-64 object-cover"
+				src="/path/to/default-image.jpg"
+				alt="Default Image" />
+			{% endif %} {% endwith %}
+		</div>
+
+		<!-- Course Information -->
+		<div
+			class="flex flex-col justify-center p-6 bg-gray-50 rounded-lg shadow-inner">
+			<h2 class="text-3xl font-bold text-gray-900 mb-4">
+				{{ course.course_title }}
+			</h2>
+			<p class="text-gray-700 text-lg mb-6">{{ course.course_description }}</p>
+
+			<!-- Course Details -->
+			<div class="text-base text-gray-600 space-y-3">
+				<p>
+					<span class="font-semibold text-gray-900">Duration:</span>
+					{{course.course_duration }}
+				</p>
+				<p>
+					<span class="font-semibold text-gray-900">Level:</span>
+					{{course.course_level }}
+				</p>
+				<p>
+					<span class="font-semibold text-gray-900">Price:</span>
+					${{course.course_price|floatformat:2 }}
+				</p>
+				<p>
+					<span class="font-semibold text-gray-900">Instructor:</span>
+					{{ course.course_instructor.first_name }}
+					{{course.course_instructor.last_name }}
+				</p>
+			</div>
+
+			<!-- Enroll Button -->
+			<div class="mt-6">
+				{% if request.user.is_authenticated%}
+				<form method="POST">
+					{%csrf_token%}
+					<button
+						type="submit"
+						class="inline-block bg-blue-600 text-white text-lg font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">
+						Enroll Now
+					</button>
+				</form>
+				{%csrf_token%} {%else%}
+				<a
+					href="{%url 'login_view'%}"
+					class="inline-block bg-blue-600 text-white text-lg font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">
+					Login to enroll
+				</a>
+				{%endif%}
+			</div>
+		</div>
+	</div>
+
+	<!-- Additional Course Content (Optional) -->
+	<div class="mt-12 p-6 bg-gray-100 rounded-lg">
+		<h3 class="text-xl font-semibold text-gray-900 mb-4">Course Overview</h3>
+		<p class="text-gray-700 text-base">
+			<!-- You can add more information about the course here, such as topics covered, goals, etc. -->
+			{{ course.overview }}
+		</p>
+	</div>
+</div>
+{% endblock %}

@@ -4,17 +4,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from django.contrib import messages
-from .models import Student, Instructor, Course, CourseImageField
+from .models import Student, Instructor, Course, CourseImageField,CourseEnrollment
 from .utils import generate_token, send_token_email, send_otp_email, send_instructor_token_email, generate_slug
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-
-
-
-
-
-
 
 import random
 
@@ -209,9 +203,14 @@ def login_instructor_page(request):
 @login_required
 def instructor_dashboard_page(request):
     courses = Course.objects.filter(course_instructor=request.user.instructor)
+    # Get the enrollments for the instructor's courses
+    enrollments = CourseEnrollment.objects.filter(course__in=courses).select_related("course_user")
+    print(enrollments)
+    # Extract the enrolled students from the enrollments
+    students = [enrollment.course_user for enrollment in enrollments]  
     for course in courses:
         course.first_image = course.images.first()
-    context = {"courses":courses}
+    context = {"courses":courses, "students":students}
     return render(request, "accounts/instructor/instructor_dashboard.html", context)
 
 
