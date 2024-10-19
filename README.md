@@ -164,6 +164,7 @@ python manage.py runserver
 ## 3. Features
 
 [authentication_README.md](./documents/VIEWS.MD)
+
 [logout_README.md](./documents/LOGOUT.MD)
 
 ### User Login and Authentication (Account)
@@ -318,6 +319,7 @@ class CourseEnrollment(models.Model):
 ## 5. URLS
 
 [static_files_README.md](./documents/STATICFILES.MD)
+
 [accessing_static_files_README.md](./documents/ACCESSINGSTATICFILES.MD)
 
 #### Account URLs
