@@ -47,7 +47,7 @@ Uses a graph structure to allow more complex relationships among data entities.
 Integrates object-oriented programming principles with database capabilities.  
 **Examples**: db4o.
 
-### Relational Database
+# Relational Database
 
 Relational databases models data by storing them in columns and rows in tables.
 If there are multiple tables, we can create relationships between them and that relationships can be involved in our queries.
