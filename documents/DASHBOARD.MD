@@ -33,14 +33,14 @@ Now, we can have multiple images for one course, but one same image cannot be ad
 
 Before going through the method, keep note of these three methods.
 
-`.get`: It returns a single object, if not, raise `DoestNotExist` error; use this if us are sure there is an item.
-`.filter`: It returns a QuerySet (`Collection of objects`), to access individual objects, we need to loop through it.
-`.first()`: It returns the first object from the QuerySet and if not object is found,it returns None.
+- `.get`: It returns a single object, if not, raise `DoestNotExist` error; use this if us are sure there is an item.
+- `.filter`: It returns a QuerySet (`Collection of objects`), to access individual objects, we need to loop through it.
+- `.first()`: It returns the first object from the QuerySet and if not object is found,it returns None.
 
 `ForeignKey` relationship helps us to have access to all fields of `CourseImage` model.
 Hence, `course_object.related_name.field_name`.
 
-1. ##### Using first
+1. #### Using first
 
 Use `first` when we need a single instance
 
@@ -52,7 +52,7 @@ course = Courses.objects.filter(some_condition).first()
 course.images.first().image.url
 ```
 
-2. ##### Using filter
+2. #### Using filter
 
 we will be using filter to filter the course and we might be having multiple course and for each course we need an image, the loop is done inside the html.
 
@@ -100,7 +100,7 @@ for course in courses:
 
 ```
 
-1. ##### Using get
+1. #### Using get
 
 Use `get` when we need a single instance
 
@@ -112,12 +112,12 @@ course = Courses.objects.get(some_condition)
 image = course.images.first().image.url
 ```
 
-#### QuerySet
+### QuerySet
 
 A QuerySet is a collection of database queries that represent a group of objects (instances) from our database
 A QuerySet represents a collection of objects. It’s like a list of database records, but it’s not the actual data until it’s evaluated.
 
-###### Features
+#### Features
 
 `Lazy Evaluation`: QuerySets are lazily evaluated, meaning they don’t hit the database until they are actually used. This allows us to build complex queries without querying the database until necessary.
 
@@ -127,12 +127,12 @@ A QuerySet represents a collection of objects. It’s like a list of database re
 
 ## Instance vs Object
 
-#### Object:
+### Object:
 
 An object refers to a data structure that is created from a class. It is an entity that contains both state (data) and behavior (methods) defined by the class, any data that is created from a class.
 A `class` is a blue print that defines the structure and behaviors of an entity.
 
-#### Instance
+### Instance
 
 an instance refers to the specific occurrence of an object. When we say "an instance of a class," we mean a particular object that has been instantiated from that class.
 In fact both of them can be used interchangeably
