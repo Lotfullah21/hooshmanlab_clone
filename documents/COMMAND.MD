@@ -1,5 +1,5 @@
 ```sh
-# to forcefully exit the enc
+# to forcefully exit the virtual environment
 exec zsh
 
 ```
