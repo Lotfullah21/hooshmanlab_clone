@@ -1,3 +1,5 @@
+## Dashboard page
+
 ```html
 <!-- instructor_dashboard -->
 {%block content%}
@@ -27,18 +29,18 @@ class CourseImageField(models.Model):
 
 ```
 
-Now, we can have multiple images for one course, but one same image cannot be added to multiple courses.
+Now, we can have multiple images for one course, but the same image cannot be added to multiple courses.
 
 #### Accessing to images through related_name
 
 Before going through the method, keep note of these three methods.
 
-- `.get`: It returns a single object, if not, raise `DoestNotExist` error; use this if us are sure there is an item.
+- `.get`: It returns a single object, if not, raise a `Does not exist` error; use this if we are sure there is an item.
 - `.filter`: It returns a QuerySet (`Collection of objects`), to access individual objects, we need to loop through it.
-- `.first()`: It returns the first object from the QuerySet and if not object is found,it returns None.
+- `.first()`: It returns the first object from the QuerySet and if no object is found, it returns None.
 
-`ForeignKey` relationship helps us to have access to all fields of `CourseImage` model.
-Hence, `course_object.related_name.field_name`.
+#### `ForeignKey` relationship helps us to have access to all fields of the `CourseImage` model.
+Hence, `course.related_name.field_name`.
 
 1. #### Using first
 
