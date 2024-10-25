@@ -67,6 +67,18 @@ Structured Query Language is the language we use to issue commands to the databa
 - Update data
 - Delete Data
 
+| Feature                    | PostgreSQL                                     | MySQL                                      |
+|----------------------------|-----------------------------------------------|--------------------------------------------|
+| **ACID Compliance**        | Fully ACID-compliant in all cases             | ACID-compliant with InnoDB; limited with other engines (e.g., MyISAM) |
+| **Data Types and Extensibility** | Wide range of native types (JSON, XML, custom types); highly extensible | Limited types (added JSON support recently); less extensible |
+| **Performance and Speed**  | Efficient with complex queries and joins      | Generally faster for simple read-heavy operations |
+| **Concurrency Support**    | Multi-Version Concurrency Control (MVCC) for high concurrency | InnoDB supports similar control, but less optimized for high concurrency |
+| **Replication and Scaling**| Synchronous and asynchronous replication, supports advanced clustering | Asynchronous replication by default, supports read replicas and clustering (e.g., Galera) |
+| **SQL Standards Compliance** | High SQL standards compliance, advanced features like window functions, CTEs | Less strict with SQL standards, looser data validation by default |
+| **Community and Ecosystem**| Strong open-source community, enterprise-grade focus | Large ecosystem, both open-source and commercial support under Oracle |
+| **Best Use Cases**         | Complex, write-intensive, analytical applications | Simple, read-heavy web applications |
+
+
 # Database model
 
 A database model or database schema is the structure or format of a database, described in a formal language supported by a database management system.
